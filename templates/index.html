@@ -62,79 +62,110 @@
         </div>
         <div class="form-group">
           <label for="gender">Gender</label>
-          <select id="gender" name="gender" required>
+          <select id="gender" name="gender">
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
         <div class="form-group">
           <label for="seniorCitizen">Senior Citizen</label>
-          <select id="seniorCitizen" name="seniorCitizen" required>
+          <select id="seniorCitizen" name="seniorCitizen">
             <option value="0">No</option>
             <option value="1">Yes</option>
           </select>
         </div>
         <div class="form-group">
           <label for="partner">Partner</label>
-          <select id="partner" name="partner" required>
+          <select id="partner" name="partner">
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
         </div>
         <div class="form-group">
           <label for="dependents">Dependents</label>
-          <select id="dependents" name="dependents" required>
+          <select id="dependents" name="dependents">
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="tenure">Tenure (Months)</label>
+          <label for="tenure">Tenure (months)</label>
           <input type="number" id="tenure" name="tenure" required />
         </div>
         <div class="form-group">
           <label for="phoneService">Phone Service</label>
-          <select id="phoneService" name="phoneService" required>
+          <select id="phoneService" name="phoneService">
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
         </div>
         <div class="form-group">
           <label for="multipleLines">Multiple Lines</label>
-          <select id="multipleLines" name="multipleLines" required>
+          <select id="multipleLines" name="multipleLines">
             <option value="No">No</option>
             <option value="Yes">Yes</option>
           </select>
         </div>
         <div class="form-group">
           <label for="internetService">Internet Service</label>
-          <select id="internetService" name="internetService" required>
+          <select id="internetService" name="internetService">
             <option value="DSL">DSL</option>
-            <option value="Fiber optic">Fiber Optic</option>
+            <option value="Fiber optic">Fiber optic</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="onlineSecurity">Online Security</label>
+          <select id="onlineSecurity" name="onlineSecurity">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="onlineBackup">Online Backup</label>
+          <select id="onlineBackup" name="onlineBackup">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="deviceProtection">Device Protection</label>
+          <select id="deviceProtection" name="deviceProtection">
+            <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
         </div>
         <div class="form-group">
           <label for="contract">Contract</label>
-          <select id="contract" name="contract" required>
+          <select id="contract" name="contract">
             <option value="Month-to-month">Month-to-month</option>
             <option value="One year">One year</option>
             <option value="Two year">Two year</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="paymentMethod">Payment Method</label>
-          <select id="paymentMethod" name="paymentMethod" required>
-            <option value="Electronic check">Electronic check</option>
-            <option value="Mailed check">Mailed check</option>
-            <option value="Bank transfer">Bank transfer</option>
-            <option value="Credit card">Credit card</option>
+          <label for="paperlessBilling">Paperless Billing</label>
+          <select id="paperlessBilling" name="paperlessBilling">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
           </select>
         </div>
         <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" name="paymentMethod">
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Mobile Banking">Mobile Banking</option>
+            <option value="Debit Card">Debit Card (Visa/MasterCard)</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+            <option value="Cheque">Cheque</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="monthlyCharges">Monthly Charges</label>
           <input
-            type="number"
+            type="text"
             id="monthlyCharges"
             name="monthlyCharges"
             required
@@ -142,7 +173,7 @@
         </div>
         <div class="form-group">
           <label for="totalCharges">Total Charges</label>
-          <input type="number" id="totalCharges" name="totalCharges" required />
+          <input type="text" id="totalCharges" name="totalCharges" required />
         </div>
         <button type="submit">Submit</button>
       </form>
