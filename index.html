@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Churn Prediction System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: auto;
+      }
+      h2 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      label {
+        font-weight: bold;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Churn Prediction Form</h2>
+      <form action="/predict" method="post">
+        <div class="form-group">
+          <label for="customerID">Customer ID</label>
+          <input type="text" id="customerID" name="customerID" required />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="seniorCitizen">Senior Citizen</label>
+          <select id="seniorCitizen" name="seniorCitizen">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="partner">Partner</label>
+          <select id="partner" name="partner">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dependents">Dependents</label>
+          <select id="dependents" name="dependents">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tenure">Tenure (months)</label>
+          <input type="number" id="tenure" name="tenure" required />
+        </div>
+        <div class="form-group">
+          <label for="phoneService">Phone Service</label>
+          <select id="phoneService" name="phoneService">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="multipleLines">Multiple Lines</label>
+          <select id="multipleLines" name="multipleLines">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="internetService">Internet Service</label>
+          <select id="internetService" name="internetService">
+            <option value="DSL">DSL</option>
+            <option value="Fiber optic">Fiber optic</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="onlineSecurity">Online Security</label>
+          <select id="onlineSecurity" name="onlineSecurity">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="onlineBackup">Online Backup</label>
+          <select id="onlineBackup" name="onlineBackup">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="deviceProtection">Device Protection</label>
+          <select id="deviceProtection" name="deviceProtection">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="contract">Contract</label>
+          <select id="contract" name="contract">
+            <option value="Month-to-month">Month-to-month</option>
+            <option value="One year">One year</option>
+            <option value="Two year">Two year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="paperlessBilling">Paperless Billing</label>
+          <select id="paperlessBilling" name="paperlessBilling">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" name="paymentMethod">
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Mobile Banking">Mobile Banking</option>
+            <option value="Debit Card">Debit Card (Visa/MasterCard)</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+            <option value="Cheque">Cheque</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="monthlyCharges">Monthly Charges</label>
+          <input
+            type="text"
+            id="monthlyCharges"
+            name="monthlyCharges"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="totalCharges">Total Charges</label>
+          <input type="text" id="totalCharges" name="totalCharges" required />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("churnForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let formData = {
+            customerID: document.getElementById("customerID").value,
+            gender: document.getElementById("gender").value,
+            seniorCitizen: document.getElementById("seniorCitizen").value,
+            partner: document.getElementById("partner").value,
+            dependents: document.getElementById("dependents").value,
+            tenure: document.getElementById("tenure").value,
+            phoneService: document.getElementById("phoneService").value,
+            multiplelines: document.getElementById("multiplelines").value,
+            internetservices: document.getElementById("internetservices").value,
+            onlinesecurity: document.getElementById("onlinesecurity").value,
+            onlinebackup: document.getElementById("onlinebackup").value,
+            deviceprotection: document.getElementById("deviceprotection").value,
+            techsupport: document.getElementById("techsupport").value,
+            streamingtv: document.getElementById("streamingtv").value,
+            streamingmovies: document.getElementById("streamingmovies").value,
+            contract: document.getElementById("contract").value,
+            paperlessbillling:
+              document.getElementById("paperlessbilling").value,
+            paymentMethod: document.getElementById("paymentMethod").value,
+            monthlyCharges: document.getElementById("monthlyCharges").value,
+            totalCharges: document.getElementById("totalCharges").value,
+          };
+
+          fetch("/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              window.location.href =
+                "result.html?prediction=" + data.prediction;
+            });
+        });
+    </script>
+  </body>
+</html>
