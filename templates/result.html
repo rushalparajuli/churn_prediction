@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Churn Prediction Result</title>
+    <style>
+      /* Style for center alignment */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+      }
+
+      /* Result box styling */
+      .result-container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      /* Churn result styles */
+      .churn {
+        color: red;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .not-churn {
+        color: green;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      /* Go back button styling */
+      .back-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .back-button:hover {
+        background: #0056b3;
+      }
+
+      /* Styling for the topic text */
+      .topic {
+        font-size: 50px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topic">Churn Prediction System</div>
+    <div class="result-container">
+      <h2>Customer Churn Prediction Result</h2>
+      <p id="result-text"></p>
+      <button class="back-button" onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+      // Function to determine whether the customer will churn
+      function predictChurn() {
+        // Get URL parameters (data from the form)
+        const params = new URLSearchParams(window.location.search);
+        let tenure = params.get("tenure");
+        let monthlyCharges = params.get("monthlyCharges");
+
+        // Convert values to numbers for comparison
+        tenure = parseInt(tenure);
+        monthlyCharges = parseFloat(monthlyCharges);
+
+        // Churn condition: (Modify based on real logic)
+        let isChurn = tenure < 6 && monthlyCharges > 70 ? true : false;
+
+        // Display result with color
+        const resultText = document.getElementById("result-text");
+        if (isChurn) {
+          resultText.innerHTML = "🔴 Customer Will Churn!";
+          resultText.className = "churn";
+        } else {
+          resultText.innerHTML = "🟢 Customer Will Not Churn!";
+          resultText.className = "not-churn";
+        }
+      }
+
+      // Function to go back to the form page
+      function goBack() {
+        window.history.back();
+      }
+
+      // Run the churn prediction function when the page loads
+      window.onload = predictChurn;
+    </script>
+  </body>
+</html>
