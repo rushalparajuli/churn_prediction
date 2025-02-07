@@ -56,7 +56,7 @@
     <div class="container">
       <h2>Churn Prediction Form</h2>
       <!-- Form that submits data to result.html using GET method -->
-      <form action="result.html" method="get">
+      <form id="churnForm">
         <div class="form-group">
           <label for="customerID">Customer ID</label>
           <input type="text" id="customerID" name="customerID" required />
@@ -197,8 +197,33 @@
           <label for="totalCharges">Total Charges</label>
           <input type="text" id="totalCharges" name="totalCharges" required />
         </div>
-        <button type="submit">Submit</button>
+        <button type="button" onclick="submitForm()">Submit</button>
       </form>
     </div>
+    <script>
+      function submitForm() {
+        const formData = new FormData(document.getElementById("churnForm"));
+        const jsonData = {};
+
+        // Convert form data to JSON
+        formData.forEach((value, key) => {
+          jsonData[key] = value;
+        });
+
+        // Send data to Flask API
+        fetch("http://127.0.0.1:5000/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            window.location.href = `result.html?prediction=${encodeURIComponent(
+              data.prediction
+            )}`;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
   </body>
 </html>
