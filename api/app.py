@@ -2,8 +2,9 @@ import numpy as np
 import pandas as pd
 from flask import Flask,request,jsonify, render_template
 import pickle
+import os
 #create a flask app
-app = Flask(__name__, template_folder='/home/rushal-parajuli/Desktop/churn/templates')
+app = Flask(__name__, template_folder=os.path.join(os.getcwd(),'/home/rushal-parajuli/Desktop/churn/templates'))
 
 #load the pickle model
 model = pickle.load(open('ChurnModel.pkl', 'rb'))
@@ -13,6 +14,7 @@ scaler = pickle.load(open('scaler.pickle', 'rb'))  # Load the scaler
 @app.route('/', methods=['GET','HEAD'])
 def home():
     return render_template("index.html")
+    
 
 @app.route('/predict', methods=['POST'])
 def predict():
