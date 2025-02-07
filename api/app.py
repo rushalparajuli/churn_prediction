@@ -10,7 +10,7 @@ model = pickle.load(open('ChurnModel.pkl', 'rb'))
 encoder_dict = pickle.load(open('encoders.pkl', 'rb'))
 scaler = pickle.load(open('scaler.pickle', 'rb'))  # Load the scaler
 
-@app.route("/")
+@app.route('/', methods=['GET','HEAD'])
 def home():
     return render_template("index.html")
 
