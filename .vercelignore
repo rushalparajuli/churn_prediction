@@ -1,0 +1,7 @@
+# Exclude unnecessary files/folders
+data/
+tests/
+*.pyc
+*.pyo
+*.git/
+*.DS_Store
