@@ -1,7 +1,8 @@
-# Exclude unnecessary files/folders
-data/
-tests/
-*.pyc
-*.pyo
-*.git/
-*.DS_Store
+# Ignore large files and unnecessary dependencies
+node_modules/
+venv/
+__pycache__/
+*.pkl
+*.log
+.DS_Store
+.git/
