@@ -4,7 +4,8 @@ from flask import Flask,request,jsonify, render_template
 import pickle
 import os
 #create a flask app
-app = Flask(__name__, template_folder=os.path.join(os.getcwd(),'/home/rushal-parajuli/Desktop/churn/templates'))
+app = Flask(__name__, template_folder='/home/rushal-parajuli/Desktop/churn/templates')
+
 
 #load the pickle model
 model = pickle.load(open('ChurnModel.pkl', 'rb'))
@@ -56,4 +57,4 @@ def predict():
         print("Error:", str(e))  # Debugging
         return jsonify({'error': str(e)}), 400
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=10000)
