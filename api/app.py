@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import joblib
 from flask import Flask,request,jsonify, render_template,redirect,url_for
 from flask_cors import CORS
 import pickle
@@ -9,16 +8,18 @@ import os
 app = Flask(__name__, template_folder='templates/')
 
 # Enable CORS for your Vercel frontend URL
-CORS(app, origins=["https://churn-murex.vercel.app/"])  #links with the frontend 
+CORS(app)
+# CORS(app, resources={r"/predict": {"origins": "https://churn-murex.vercel.app"}})  # Allow all origins or specify your frontend
+# CORS(app, origins=["https://churn-murex.vercel.app"])  #links with the frontend 
 
 
 #load the pickle model
-model = joblib.load(open('ChurnModel.pkl', 'rb'))
-encoder_dict = joblib.load(open('encoders.pkl', 'rb'))
-scaler = joblib.load(open('scaler.pickle', 'rb'))  # Load the scaler
+model = pickle.load(open('ChurnModel.pkl', 'rb'))
+encoder_dict = pickle.load(open('encoders.pkl', 'rb'))
+scaler = pickle.load(open('scaler.pickle', 'rb'))  # Load the scaler
 
 @app.route('/', methods=['GET','HEAD'])
-def index():            #index ko thau ma home theyo
+def home():            #index ko thau ma home theyo
     return render_template("index.html")
     
 
