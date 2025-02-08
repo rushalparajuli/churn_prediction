@@ -210,6 +210,9 @@
           jsonData[key] = value;
         });
 
+        // Check if the data is properly formed (optional)
+        console.log("Sending data:", jsonData); // Debugging
+
         // Send data to Flask API
         fetch("https://churn-prediction-ov7x.onrender.com/predict", {
           method: "POST",
@@ -218,9 +221,13 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            window.location.href = `result.html?prediction=${encodeURIComponent(
-              data.prediction
-            )}`;
+            if (data.prediction) {
+              window.location.href = `result.html?prediction=${encodeURIComponent(
+                data.prediction
+              )}`;
+            } else {
+              console.error("Error: No prediction returned from API.");
+            }
           })
           .catch((error) => console.error("Error:", error));
       }
