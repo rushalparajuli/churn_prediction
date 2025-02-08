@@ -1,10 +1,14 @@
 import numpy as np
 import pandas as pd
 from flask import Flask,request,jsonify, render_template
+from flask_cors import CORS
 import pickle
 import os
 #create a flask app
 app = Flask(__name__, template_folder='templates/')
+
+# Enable CORS for your Vercel frontend URL
+CORS(app, origins=["https://churn-murex.vercel.app/"])  # Replace with your actual Vercel URL
 
 
 #load the pickle model
