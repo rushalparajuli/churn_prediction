@@ -26,8 +26,10 @@ def home():            #index ko thau ma home theyo
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        data = request.json  # Receive input JSON
+        data = request.get_json()  # Receive input JSON
         print("Received Data:", data)  # Debugging
+        if not data:
+            return jsonify({"error": "No input data"}), 400
 
         formatted_data = []
 
@@ -58,7 +60,7 @@ def predict():
         print("Prediction Result:", result_text)  # Debugging
 
         # Redirect to result.html with prediction as a query parameter
-        return redirect(url_for('result', prediction=result_text))
+        return jsonify({"prediction": result_text})
 
     except Exception as e:
         print("Error:", str(e))  # Debugging
@@ -67,8 +69,8 @@ def predict():
 @app.route('/result')
 def result():
     # This route simply renders result.html with the prediction in the URL
-    prediction = request.args.get('prediction')  # Get the prediction from the URL
-    return render_template('result.html', prediction=prediction)
+    # prediction = request.args.get('prediction')  # Get the prediction from the URL
+    return render_template('result.html')
 
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 10000))  # Default to 10000 if not set
