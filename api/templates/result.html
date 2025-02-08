@@ -69,11 +69,14 @@
       <button class="back-button" onclick="goBack()">Go Back</button>
     </div>
 
+    <
     <script>
       // Function to retrieve and display the prediction result from the URL
       window.onload = function () {
         const params = new URLSearchParams(window.location.search);
         let prediction = params.get("prediction");
+
+        console.log("Prediction from URL:", prediction); // Debugging: Log prediction from URL
 
         // If no prediction is found, display an error message
         if (!prediction) {

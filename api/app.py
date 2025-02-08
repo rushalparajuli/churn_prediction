@@ -8,13 +8,17 @@ import os
 # Create a Flask app
 app = Flask(__name__, template_folder='templates/')
 
-# Enable CORS for Vercel frontend
-CORS(app, resources={r"/predict": {"origins": "https://churn-murex.vercel.app"}})
+# Enable CORS for all routes
+CORS(app)
 
 # Load the trained model, encoders, and scaler
-model = pickle.load(open('ChurnModel.pkl', 'rb'))
-encoder_dict = pickle.load(open('encoders.pkl', 'rb'))
-scaler = pickle.load(open('scaler.pickle', 'rb'))
+try:
+    model = pickle.load(open('ChurnModel.pkl', 'rb'))
+    encoder_dict = pickle.load(open('encoders.pkl', 'rb'))
+    scaler = pickle.load(open('scaler.pickle', 'rb'))
+    print("Model, encoders, and scaler loaded successfully!")
+except Exception as e:
+    print(f"Error loading model, encoders, or scaler: {e}")
 
 @app.route('/', methods=['GET', 'HEAD'])
 def home():
@@ -24,19 +28,23 @@ def home():
 def predict():
     try:
         data = request.get_json()
+        print("Received data:", data)  # Debugging: Log received data
+
         if not data:
             return jsonify({"error": "No input data provided"}), 400
 
         formatted_data = []
-        numeric_features = ['tenure', 'MonthlyCharges', 'TotalCharges']
+        numeric_features = ['Tenure', 'MonthlyCharges', 'TotalCharges']
 
-        for column in encoder_dict.keys():  # Encode categorical values
+        # Encode categorical values
+        for column in encoder_dict.keys():
             if column in data:
                 formatted_data.append(encoder_dict[column].transform([data[column]])[0])
             else:
                 return jsonify({"error": f"Missing input: {column}"}), 400
 
-        for column in numeric_features:  # Scale numeric values
+        # Scale numeric values
+        for column in numeric_features:
             if column in data:
                 formatted_data.append(float(data[column]))  # Convert to float
             else:
@@ -49,9 +57,11 @@ def predict():
 
         # Convert to 2D array for model prediction
         formatted_data = np.array([formatted_data])
-        
+        print("Formatted data for prediction:", formatted_data)  # Debugging: Log formatted data
+
         # Make prediction
         prediction = model.predict(formatted_data)[0]
+        print("Prediction:", prediction)  # Debugging: Log prediction
 
         # Convert prediction result to text
         result_text = "The customer will churn" if prediction == 1 else "The customer will not churn"
@@ -59,6 +69,7 @@ def predict():
         return jsonify({"prediction": result_text})
 
     except Exception as e:
+        print(f"Error during prediction: {e}")  # Debugging: Log errors
         return jsonify({'error': str(e)}), 400
 
 @app.route('/result')
