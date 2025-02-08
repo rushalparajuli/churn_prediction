@@ -4,7 +4,7 @@ from flask import Flask,request,jsonify, render_template
 import pickle
 import os
 #create a flask app
-app = Flask(__name__, template_folder='/home/rushal-parajuli/Desktop/churn/templates')
+app = Flask(__name__, template_folder='templates/')
 
 
 #load the pickle model
