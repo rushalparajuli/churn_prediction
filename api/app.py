@@ -56,9 +56,7 @@ def predict():
         print("Prediction Result:", result_text)  # Debugging
 
         # Redirect to result.html with prediction as a query parameter
-        return redirect(url_for('result') + f'?prediction={result_text}')
-
-        
+        return redirect(url_for('result', prediction=result_text))
 
     except Exception as e:
         print("Error:", str(e))  # Debugging
@@ -67,7 +65,8 @@ def predict():
 @app.route('/result')
 def result():
     # This route simply renders result.html with the prediction in the URL
-    return render_template('result.html')
+    prediction = request.args.get('prediction')  # Get the prediction from the URL
+    return render_template('result.html', prediction=prediction)
 
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 10000))  # Default to 10000 if not set
