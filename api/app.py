@@ -57,4 +57,5 @@ def predict():
         print("Error:", str(e))  # Debugging
         return jsonify({'error': str(e)}), 400
 if __name__ == "__main__":
+    PORT = int(os.environ.get("PORT", 10000))  # Default to 10000 if not set
     app.run(debug=True, host="0.0.0.0", port=10000)
