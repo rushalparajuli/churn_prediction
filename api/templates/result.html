@@ -75,6 +75,15 @@
         const params = new URLSearchParams(window.location.search);
         let prediction = params.get("prediction");
 
+        // If no prediction is found, display an error message
+        if (!prediction) {
+          const resultText = document.getElementById("result-text");
+          resultText.innerHTML =
+            "Prediction result is unavailable. Please try again.";
+          resultText.className = "not-churn"; // Default to "not churn" style for error
+          return;
+        }
+
         // Get the result text element and set the result
         const resultText = document.getElementById("result-text");
         resultText.innerHTML = prediction;

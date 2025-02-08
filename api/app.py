@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from flask import Flask,request,jsonify, render_template
+from flask import Flask,request,jsonify, render_template,redirect,url_for
 from flask_cors import CORS
 import pickle
 import os
@@ -8,7 +8,7 @@ import os
 app = Flask(__name__, template_folder='templates/')
 
 # Enable CORS for your Vercel frontend URL
-CORS(app, origins=["https://churn-murex.vercel.app/"])  # Replace with your actual Vercel URL
+CORS(app, origins=["https://churn-murex.vercel.app/"])  #links with the frontend 
 
 
 #load the pickle model
@@ -55,11 +55,20 @@ def predict():
         result_text = "The customer will churn" if prediction == 1 else "The customer will not churn"
         print("Prediction Result:", result_text)  # Debugging
 
-        return jsonify({'prediction': result_text})
+        # Redirect to result.html with prediction as a query parameter
+        return redirect(url_for('result') + f'?prediction={result_text}')
+
+        
 
     except Exception as e:
         print("Error:", str(e))  # Debugging
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/result')
+def result():
+    # This route simply renders result.html with the prediction in the URL
+    return render_template('result.html')
+
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 10000))  # Default to 10000 if not set
     app.run(debug=True, host="0.0.0.0", port=10000)
